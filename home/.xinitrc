@@ -16,7 +16,7 @@ fi
 ~/.fehbg &
 
 # picom
-picom &
+#picom &
 
 # automount/unmount
 udiskie &
