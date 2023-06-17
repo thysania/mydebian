@@ -55,7 +55,7 @@ logo "Installing needed packages.."
 
 dependencias=(xorg libc6 libcap2-bin libfontconfig1 libpam0g libx11-6 libxft2 libxinerama1 libxrandr2 libxss1 \
             dunst udiskie unzip acpie feh scrot xdg-user-dirs neofetch \
-			playerctl mpd ncmpcpp picom lf pamixer \
+			playerctl mpd ncmpcpp lf pamixer \
 			fonts-dejavu fonts-hack-ttf \
 			alacritty zsh zsh-autosuggestions zsh-syntax-highlighting \
 			chromium)
