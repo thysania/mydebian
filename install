@@ -57,7 +57,7 @@ dependencias=(xorg libc6 libcap2-bin libfontconfig1 libpam0g libx11-6 libxft2 li
             dunst udiskie unzip acpie feh scrot xdg-user-dirs neofetch \
 			playerctl mpd ncmpcpp picom lf pamixer \
 			fonts-dejavu fonts-hack-ttf \
-			zsh zsh-autosuggestions zsh-syntax-highlighting \
+			alacritty zsh zsh-autosuggestions zsh-syntax-highlighting \
 			chromium)
 
 is_installed() {
@@ -159,6 +159,7 @@ done
 
 cp -f "$HOME"/mydebian/home/.zshrc "$HOME"
 cp -f "$HOME"/mydebian/home/.xinitrc "$HOME"
+cp -f "$HOME"/mydebian/home/statusbar.sh "$HOME"
 chmod +x ~/mydebian/statusbar.sh
 fc-cache -rv >/dev/null 2>&1
 printf "%s%sFiles copied succesfully!!%s\n" "${BLD}" "${CGR}" "${CNC}"
@@ -188,29 +189,8 @@ clear
 ########## --------- Installing DWM & dmenu---------- ##########
 
 logo "Installing DWM & dmenu"
-cd ~/myarch/mydwm
-read -p "Choose your dwm flavor(eremika/mikasared/street): " dwmcolor
-if [ $dwmcolor = "eremika" ]; then
-	cp eremika config.def.h
-	sudo make clean install
-elif [ $dwmcolor = "mikasared" ]; then
-	cp mikasared config.def.h
-	sudo make clean install
-elif [ $dwmcolor = "street" ]; then
-	cp street config.def.h
-	sudo make clean install
-else echo "Not a valid option!"
-fi
-cd ~/myarch/dmenu && sudo make clean install
-mkdir -p ~/clones
+cd ~/mydebian/dwm && sudo make clean install
+cd ~/mydebian/dmenu && sudo make clean install
 
 ########## --------- Changing wallpaper ---------- ##########
-feh --bg-fill ~/myarch/wallpapers/Street/1318187.png
-########## --------- Installing Snap store ---------- ##########
-
-logo "Installing snap store"
-cd ~/clones && git clone https://aur.archlinux.org/snapd.git
-cd snapd
-makepkg -si && sleep 10
-sudo systemctl enable --now snapd.socket
-echo"" && echo "DONE! Installation finished."
+feh --bg-fill ~/mydebian/misc/wallpapers/wall-01.png
