@@ -1,6 +1,6 @@
-## mydebian
+# mydebian
 My Debian rice.
-# dwm patches:
+## dwm patches:
 - Fullgapps
 - resizecorners
 - rainbowtags
