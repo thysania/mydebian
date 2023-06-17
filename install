@@ -194,3 +194,7 @@ cd ~/mydebian/dmenu && sudo make clean install
 
 ########## --------- Changing wallpaper ---------- ##########
 feh --bg-fill ~/mydebian/misc/wallpapers/wall-01.png
+
+########## ------ ########
+echo""
+printf "%s%sDONE!\nInstallation finished, now reboot\n" "${BLD}" "${CGR}" "${CNC}"
