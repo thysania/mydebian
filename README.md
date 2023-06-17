@@ -1,0 +1,2 @@
+# mydebian
+My Debian rice.
