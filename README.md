@@ -1,5 +1,5 @@
 # mydebian
-My Debian rice.
+My Debian rice.\n
 dwm patches:
 - Fullgapps
 - resizecorners
