@@ -61,7 +61,7 @@ dependencias=(xorg libc6 libcap2-bin libfontconfig1 libpam0g libx11-6 libxft2 li
 			chromium)
 
 is_installed() {
-  pacman -Qi "$1" &> /dev/null
+  dpkg -s "$1" &> /dev/null
   return $?
 }
 
@@ -69,7 +69,7 @@ printf "%s%sChecking for required packages...%s\n" "${BLD}" "${CBL}" "${CNC}"
 for paquete in "${dependencias[@]}"
 do
   if ! is_installed "$paquete"; then
-    sudo pacman -S "$paquete" --noconfirm
+    sudo apt-get install "$paquete" -y
     printf "\n"
   else
     printf '%s%s is already installed on your system!%s\n' "${CGR}" "$paquete" "${CNC}"
