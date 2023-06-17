@@ -102,7 +102,7 @@ printf "Copying files to respective directories..\n"
 [ ! -d ~/.local/share/fonts ] && mkdir -p ~/.local/share/fonts
 [ ! -d ~/.local/share/asciiart ] && mkdir -p ~/.local/share/asciiart
 
-for archivos in ~/myarch/.config/*; do
+for archivos in ~/mydebian/config/*; do
   cp -R "${archivos}" ~/.config/
   if [ $? -eq 0 ]; then
 	printf "%s%s%s folder copied succesfully!%s\n" "${BLD}" "${CGR}" "${archivos}" "${CNC}"
@@ -113,7 +113,7 @@ for archivos in ~/myarch/.config/*; do
   fi
 done
 
-for archivos in ~/myarch/misc/bin/*; do
+for archivos in ~/mydebian/misc/bin/*; do
   cp -R "${archivos}" ~/.local/bin/
   if [ $? -eq 0 ]; then
 	printf "%s%s%s file copied succesfully!%s\n" "${BLD}" "${CGR}" "${archivos}" "${CNC}"
@@ -124,7 +124,7 @@ for archivos in ~/myarch/misc/bin/*; do
   fi
 done
 
-for archivos in ~/myarch/misc/applications/*; do
+for archivos in ~/mydebian/misc/applications/*; do
   cp -R "${archivos}" ~/.local/share/applications/
   if [ $? -eq 0 ]; then
 	printf "%s%s%s file copied succesfully!%s\n" "${BLD}" "${CGR}" "${archivos}" "${CNC}"
@@ -135,7 +135,7 @@ for archivos in ~/myarch/misc/applications/*; do
   fi
 done
 
-for archivos in ~/myarch/misc/fonts/*; do
+for archivos in ~/mydebian/misc/fonts/*; do
   cp -R "${archivos}" ~/.local/share/fonts/
   if [ $? -eq 0 ]; then
 	printf "%s%s%s copied succesfully!%s\n" "${BLD}" "${CGR}" "${archivos}" "${CNC}"
@@ -146,7 +146,7 @@ for archivos in ~/myarch/misc/fonts/*; do
   fi
 done
 
-for archivos in ~/myarch/misc/asciiart/*; do
+for archivos in ~/mydebian/misc/asciiart/*; do
   cp -R "${archivos}" ~/.local/share/asciiart/
   if [ $? -eq 0 ]; then
 	printf "%s%s%s file copied succesfully!%s\n" "${BLD}" "${CGR}" "${archivos}" "${CNC}"
@@ -157,9 +157,9 @@ for archivos in ~/myarch/misc/asciiart/*; do
   fi
 done
 
-cp -f "$HOME"/myarch/.zshrc "$HOME"
-cp -f "$HOME"/myarch/.xinitrc "$HOME"
-chmod +x ~/myarch/statusbar.sh
+cp -f "$HOME"/mydebian/home/.zshrc "$HOME"
+cp -f "$HOME"/mydebian/home/.xinitrc "$HOME"
+chmod +x ~/mydebian/statusbar.sh
 fc-cache -rv >/dev/null 2>&1
 printf "%s%sFiles copied succesfully!!%s\n" "${BLD}" "${CGR}" "${CNC}"
 sleep 3
