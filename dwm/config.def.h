@@ -31,7 +31,7 @@ static const char *colors[][3]      = {
 static const char *tags[] = { "", "", "" };
 
 static const char *tagsel[][2] = {
-	{ col_beige, col_black },
+	{ col_gray, col_black },
 	{ col_red1, col_black },
 	{ col_green, col_black },
 };
