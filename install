@@ -1,0 +1,216 @@
+#!/usr/bin/sh
+#  
+#  __  ____   _____  ___ ___ ___   _   _  _ 
+# |  \/  \ \ / /   \| __| _ )_ _| /_\ | \| |
+# | |\/| |\ V /| |) | _|| _ \| | / _ \| .` |
+# |_|  |_| |_| |___/|___|___/___/_/ \_\_|\_|
+
+#	Script to install my dwm rice
+#   Author: thysania
+#	https://github.com/thysania
+
+CRE=$(tput setaf 1)
+CYE=$(tput setaf 3)
+CGR=$(tput setaf 2)
+CBL=$(tput setaf 4)
+BLD=$(tput bold)
+CNC=$(tput sgr0)
+date=$(date +%Y%m%d-%H%M%S)
+
+logo () {
+	
+	local text="${1:?}"
+	echo -en "                                  
+
+  __  __       _____       _     _             
+ |  ||  |     |  __       | |   (_)            
+ |  _ / |_   _| |  | | ___| |__  _  __ _ _ __  
+ | |  | | | | | |  | |/ _   '_  | |/ _  |  _   
+ | |  | | |_| | |__| |  __/ |_) | | (_| | | | |
+ |_|  |_| __, |_____/  ___|_.__/|_| __,_|_| |_|
+          __/ |                                
+         |___/                                 
+			  Thysania Dotfiles\n\n"
+    printf ' %s [%s%s %s%s %s]%s\n\n' "${CRE}" "${CNC}" "${CYE}" "${text}" "${CNC}" "${CRE}" "${CNC}"
+}
+
+########## ---------- Welcome ---------- ##########
+
+logo "Welcome!"
+printf '%s%sThis script will check if you have the necessary dependencies, and if not, it will install them. You will be prompted for your root password to install missing dependencies and/or to switch to zsh shell if its not your default.\nThis script DO NOT modify any of your system configuration.%s\n\n' "${BLD}" "${CRE}" "${CNC}"
+
+while true; do
+	read -rp " Do you wish to continue? [y/N]: " yn
+		case $yn in
+			[Yy]* ) break;;
+			[Nn]* ) exit;;
+			* ) printf " Error: just write 'y' or 'n'\n\n";;
+		esac
+    done
+clear
+
+########## ---------- Install packages ---------- ##########
+
+logo "Installing needed packages.."
+
+dependencias=(xorg libc6 libcap2-bin libfontconfig1 libpam0g libx11-6 libxft2 libxinerama1 libxrandr2 libxss1 \
+            dunst udiskie unzip acpie feh scrot xdg-user-dirs neofetch \
+			playerctl mpd ncmpcpp picom lf pamixer \
+			fonts-dejavu fonts-hack-ttf \
+			zsh zsh-autosuggestions zsh-syntax-highlighting \
+			chromium)
+
+is_installed() {
+  pacman -Qi "$1" &> /dev/null
+  return $?
+}
+
+printf "%s%sChecking for required packages...%s\n" "${BLD}" "${CBL}" "${CNC}"
+for paquete in "${dependencias[@]}"
+do
+  if ! is_installed "$paquete"; then
+    sudo pacman -S "$paquete" --noconfirm
+    printf "\n"
+  else
+    printf '%s%s is already installed on your system!%s\n' "${CGR}" "$paquete" "${CNC}"
+    sleep 1
+  fi
+done
+sleep 3
+clear
+
+########## ---------- Preparing Folders ---------- ##########
+
+logo "Preparing Folders"
+if [ ! -e $HOME/.config/user-dirs.dirs ]; then
+	xdg-user-dirs-update
+	echo "Creating xdg-user-dirs"
+else
+	echo "user-dirs.dirs already exists"
+fi
+mkdir -p ~/Pictures/screenshots
+sleep 2 
+clear
+########## ---------- Copy the Rice! ---------- ##########
+
+logo "Installing dotfiles.."
+printf "Copying files to respective directories..\n"
+
+[ ! -d ~/.config ] && mkdir -p ~/.config
+[ ! -d ~/.local/bin ] && mkdir -p ~/.local/bin
+[ ! -d ~/.local/share/applications ] && mkdir -p ~/.local/share/applications
+[ ! -d ~/.local/share/fonts ] && mkdir -p ~/.local/share/fonts
+[ ! -d ~/.local/share/asciiart ] && mkdir -p ~/.local/share/asciiart
+
+for archivos in ~/myarch/.config/*; do
+  cp -R "${archivos}" ~/.config/
+  if [ $? -eq 0 ]; then
+	printf "%s%s%s folder copied succesfully!%s\n" "${BLD}" "${CGR}" "${archivos}" "${CNC}"
+	sleep 1
+  else
+	printf "%s%s%s failed to been copied, you must copy it manually%s\n" "${BLD}" "${CRE}" "${archivos}" "${CNC}"
+	sleep 1
+  fi
+done
+
+for archivos in ~/myarch/misc/bin/*; do
+  cp -R "${archivos}" ~/.local/bin/
+  if [ $? -eq 0 ]; then
+	printf "%s%s%s file copied succesfully!%s\n" "${BLD}" "${CGR}" "${archivos}" "${CNC}"
+	sleep 1
+  else
+	printf "%s%s%s failed to been copied, you must copy it manually%s\n" "${BLD}" "${CRE}" "${archivos}" "${CNC}"
+	sleep 1
+  fi
+done
+
+for archivos in ~/myarch/misc/applications/*; do
+  cp -R "${archivos}" ~/.local/share/applications/
+  if [ $? -eq 0 ]; then
+	printf "%s%s%s file copied succesfully!%s\n" "${BLD}" "${CGR}" "${archivos}" "${CNC}"
+	sleep 1
+  else
+	printf "%s%s%s failed to been copied, you must copy it manually%s\n" "${BLD}" "${CRE}" "${archivos}" "${CNC}"
+	sleep 1
+  fi
+done
+
+for archivos in ~/myarch/misc/fonts/*; do
+  cp -R "${archivos}" ~/.local/share/fonts/
+  if [ $? -eq 0 ]; then
+	printf "%s%s%s copied succesfully!%s\n" "${BLD}" "${CGR}" "${archivos}" "${CNC}"
+	sleep 1
+  else
+	printf "%s%s%s failed to been copied, you must copy it manually%s\n" "${BLD}" "${CRE}" "${archivos}" "${CNC}"
+	sleep 1
+  fi
+done
+
+for archivos in ~/myarch/misc/asciiart/*; do
+  cp -R "${archivos}" ~/.local/share/asciiart/
+  if [ $? -eq 0 ]; then
+	printf "%s%s%s file copied succesfully!%s\n" "${BLD}" "${CGR}" "${archivos}" "${CNC}"
+	sleep 1
+  else
+	printf "%s%s%s failed to been copied, you must copy it manually%s\n" "${BLD}" "${CRE}" "${archivos}" "${CNC}"
+	sleep 1
+  fi
+done
+
+cp -f "$HOME"/myarch/.zshrc "$HOME"
+cp -f "$HOME"/myarch/.xinitrc "$HOME"
+chmod +x ~/myarch/statusbar.sh
+fc-cache -rv >/dev/null 2>&1
+printf "%s%sFiles copied succesfully!!%s\n" "${BLD}" "${CGR}" "${CNC}"
+sleep 3
+
+########## ---------- Enabling MPD service ---------- ##########
+
+logo "Enabling mpd service"
+
+systemctl --user enable mpd.service
+systemctl --user start mpd.service
+printf "%s%sDone!!%s\n\n" "${BLD}" "${CGR}" "${CNC}"
+sleep 2
+
+########## --------- Changing shell to zsh ---------- ##########
+logo "Changing default shell to zsh"
+printf "%s%sIf your shell is not zsh will be changed now.\nYour root password is needed to make the change.\n\nAfter that is important for you to reboot.\n %s\n" "${BLD}" "${CYE}" "${CNC}"
+if [[ $SHELL != "/usr/bin/zsh" ]]; then
+  echo "Changing shell to zsh, your root pass is needed."
+  chsh -s /usr/bin/zsh
+else
+  printf "%s%sYour shell is already zsh\nGood bye! installation finished, now reboot%s\n" "${BLD}" "${CGR}" "${CNC}"
+  zsh
+fi
+clear
+
+########## --------- Installing DWM & dmenu---------- ##########
+
+logo "Installing DWM & dmenu"
+cd ~/myarch/mydwm
+read -p "Choose your dwm flavor(eremika/mikasared/street): " dwmcolor
+if [ $dwmcolor = "eremika" ]; then
+	cp eremika config.def.h
+	sudo make clean install
+elif [ $dwmcolor = "mikasared" ]; then
+	cp mikasared config.def.h
+	sudo make clean install
+elif [ $dwmcolor = "street" ]; then
+	cp street config.def.h
+	sudo make clean install
+else echo "Not a valid option!"
+fi
+cd ~/myarch/dmenu && sudo make clean install
+mkdir -p ~/clones
+
+########## --------- Changing wallpaper ---------- ##########
+feh --bg-fill ~/myarch/wallpapers/Street/1318187.png
+########## --------- Installing Snap store ---------- ##########
+
+logo "Installing snap store"
+cd ~/clones && git clone https://aur.archlinux.org/snapd.git
+cd snapd
+makepkg -si && sleep 10
+sudo systemctl enable --now snapd.socket
+echo"" && echo "DONE! Installation finished."
