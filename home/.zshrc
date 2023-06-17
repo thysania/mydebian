@@ -129,12 +129,14 @@ alias gita='git add'
 alias ssn='sudo shutdown'
 alias sr='sudo reboot'
 
-# pacman 
-alias apts='sudo apt-get install'                         # Install pkgs
+# apt
+alias apti='sudo apt-get install'                         # Install pkgs
 alias apty='sudo apt-get update'                          # Refresh pkglist
 alias aptup='sudo apt-get update && sudo apt-get upgrade' # Refresh pkglist and update 
 alias aptr='sudo apt-get remove'                          # Remove pkgs
 alias aptrr='sudo apt-get remove --purge'                 # Purge
+alias autorm='sudo apt-get autoremove'                    # Autoremove
+alias apts='apt-cache search'                             # Search for packages by name or keyword
 
 # others
 alias zshrc='nvim ~/.zshrc'
