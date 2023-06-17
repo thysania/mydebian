@@ -1,5 +1,5 @@
 # ╔═╗╔═╗╦ ╦╦═╗╔═╗  ╔═╗╔═╗╔╗╔╔═╗╦╔═╗  - thysania
-# ╔═╝╚═╗╠═╣╠╦╝║    ║  ║ ║║║║╠╣ ║║ ╦  - https://github.com/thysania/myarch
+# ╔═╝╚═╗╠═╣╠╦╝║    ║  ║ ║║║║╠╣ ║║ ╦  - https://github.com/thysania/mydebian
 # ╚═╝╚═╝╩ ╩╩╚═╚═╝  ╚═╝╚═╝╝╚╝╚  ╩╚═╝  - zsh config
 
 ### THE PROMPT
@@ -130,13 +130,11 @@ alias ssn='sudo shutdown'
 alias sr='sudo reboot'
 
 # pacman 
-alias pacsyu='sudo pacman -Syu'                  # update only standard pkgs
-alias pacsyyu='sudo pacman -Syyu'                # Refresh pkglist & update standard pkgs
-alias pacs='sudo pacman -S'                     # Install pkgs
-alias pacr='sudo pacman -Rns'                   # Remove packages, including its settings and dependencies
-alias pacrr='sudo pacman -Rs'                    # Delete all orphaned packages
-alias unlock='sudo rm /var/lib/pacman/db.lck'    # remove pacman lock
-alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # remove orphaned packages
+alias apts='sudo apt-get install'                         # Install pkgs
+alias apty='sudo apt-get update'                          # Refresh pkglist
+alias aptup='sudo apt-get update && sudo apt-get upgrade' # Refresh pkglist and update 
+alias aptr='sudo apt-get remove'                          # Remove pkgs
+alias aptrr='sudo apt-get remove --purge'                 # Purge
 
 # others
 alias zshrc='nvim ~/.zshrc'
