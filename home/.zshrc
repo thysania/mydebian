@@ -118,10 +118,17 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
 # git
+alias gits='git status'
 alias gitc='git clone'
 alias gitcom='git commit -m'
 alias gitp='git push'
 alias gita='git add'
+
+# git ssh
+alias sshgen='ssh-keygen -t ed25519 -C'
+alias sshstart='eval "$(ssh-agent -s)"'
+alias sshadd='ssh-add ~/.ssh/id_ed25519'
+alias sshshow='cat ~/.ssh/id_ed25519.pub'
 
 # shutdown and reboot
 alias ssn='sudo shutdown'
