@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+#  
+#  __  ____   _____  ___ ___ ___   _   _  _ 
+# |  \/  \ \ / /   \| __| _ )_ _| /_\ | \| |
+# | |\/| |\ V /| |) | _|| _ \| | / _ \| .` |
+# |_|  |_| |_| |___/|___|___/___/_/ \_\_|\_|
+
+#	Script to install my dwm rice
+#   Author: thysania
+#	https://github.com/thysania
+
+CRE=$(tput setaf 1)
+CYE=$(tput setaf 3)
+CGR=$(tput setaf 2)
+CBL=$(tput setaf 4)
+BLD=$(tput bold)
+CNC=$(tput sgr0)
+date=$(date +%Y%m%d-%H%M%S)
+
+logo () {
+	
+	local text="${1:?}"
+	echo -en "                                  
+
+  __  __       _____       _     _             
+ |  ||  |     |  __       | |   (_)            
+ |  _ / |_   _| |  | | ___| |__  _  __ _ _ __  
+ | |  | | | | | |  | |/ _   '_  | |/ _  |  _  | 
+ | |  | | |_| | |__| |  __/ |_) | | (_| | | | |
+ |_|  |_| __  |_____/  ___|_.__/|_| __,_|_| |_|
+          __/ |                                
+         |___/                                 
+			  Thysania Dotfiles\n\n"
+    printf ' %s [%s%s %s%s %s]%s\n\n' "${CRE}" "${CNC}" "${CYE}" "${text}" "${CNC}" "${CRE}" "${CNC}"
+}
+
+########## ---------- Welcome ---------- ##########
+
+logo "Welcome!"
+printf '%s%sThis script will check if you have the necessary dependencies, and if not, it will install them. You will be prompted for your root password to install missing dependencies and/or to switch to zsh shell if its not your default.\nThis script DO NOT modify any of your system configuration.%s\n\n' "${BLD}" "${CRE}" "${CNC}"
+
+while true; do
+	read -rp " Do you wish to continue? [y/N]: " yn
+		case $yn in
+			[Yy]* ) break;;
+			[Nn]* ) exit;;
+			* ) printf " Error: just write 'y' or 'n'\n\n";;
+		esac
+    done
+clear
+
+########## ---------- Install packages ---------- ##########
+
+logo "Installing needed packages.."
+
+dependencias=(xorg libc6 libcap2-bin libfontconfig1 libpam0g libx11-6 libxft-dev libxinerama-dev libxrandr2 libxss1 libx11-dev \
+			dunst udiskie unzip feh scrot xdg-user-dirs neofetch acpie curl \
+			pulseaudio alsa-utils playerctl mpd ncmpcpp lf pamixer \
+			fonts-dejavu fonts-hack-ttf \
+			alacritty firefox)
+
+is_installed() {
+  dpkg -s "$1" &> /dev/null
+  return $?
+}
+
+printf "%s%sChecking for required packages...%s\n" "${BLD}" "${CBL}" "${CNC}"
+for paquete in "${dependencias[@]}"
+do
+  if ! is_installed "$paquete"; then
+    sudo apt-get install "$paquete" -y
+    printf "\n"
+  else
+    printf '%s%s is already installed on your system!%s\n' "${CGR}" "$paquete" "${CNC}"
+    sleep 1
+  fi
+done
+sleep 3
+clear
+
+########## ---------- Enabling MPD service ---------- ##########
+
+logo "Enabling mpd service"
+
+systemctl --user enable mpd.service
+systemctl --user start mpd.service
+printf "%s%sDone!!%s\n\n" "${BLD}" "${CGR}" "${CNC}"
+sleep 2
+
+########## ------ ########
+echo""
+printf "%s%sDONE!\nInstallation finished\n" "${BLD}" "${CGR}" "${CNC}"

@@ -16,15 +16,15 @@ fi
 ~/.fehbg &
 
 # picom
-#picom &
+picom &
 
 # automount/unmount
 udiskie &
 
 # dwm loop
-while true; do
-	dwm >/dev/null 2>&1
-done
+#while true; do
+#	dwm >/dev/null 2>&1
+#done
 
-# execute dwm
-exec dwm
+# execute bspwm
+exec bspwm
